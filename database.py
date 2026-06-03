@@ -1,0 +1,79 @@
+import psycopg2
+
+# establishing a connection to a postgres database
+conn=psycopg2.connect(host="localhost",port="5432",user="postgres",password="warigia",dbname="myduka")
+cur=conn.cursor()
+# cur object
+
+# def get_products():
+#     cur.execute("select * from products")
+#     products_data= cur.fetchall()
+#     return products_data
+
+def get_sales():
+    cur.execute("select * from sales")
+    sales_data= cur.fetchall()
+    return sales_data
+
+
+# method 1:
+# def insert_products(values):
+#     cur.execute(f"insert into products(name,buying_price,selling_price)values{values}")
+#     conn.commit()
+
+# product1=('Lenovo laptop',45000,55000)
+# product2=('Infinix',25000,32000)
+
+# insert_products(product1)
+# insert_products(product2)
+
+# method 2:
+# def insert_products2(values):
+#     cur.execute("insert into products(name,buying_price,selling_price)values(%s,%s,%s)" ,values)
+#     conn.commit()
+
+# product3=('Tecno',23000,30000)
+# insert_products2(product3)
+
+# products_data=get_products()
+# print(products_data)
+
+def get_stock():
+    cur.execute("select * from stock")
+    stock_data=cur.fetchall()
+    return stock_data
+
+def insert_sales(values):
+    cur.execute("insert into sales(pid,quantity)values(%s,%s)" ,values)
+    conn.commit()
+
+sale3=(3,10)
+sale4=(4,26)
+sale5=(5,32)
+
+insert_sales(sale3)
+insert_sales(sale4)
+insert_sales(sale5)
+
+
+sales_data = get_sales()
+print(sales_data)
+
+
+def insert_stock(values):
+    cur.execute("insert into stock(pid,stock_quantity)values(%s,%s)" ,values)
+    conn.commit()
+
+stock1=(1,12)
+stock2=(2,17)
+stock3=(3,18)
+
+insert_stock(stock1)
+insert_stock(stock2)
+insert_stock(stock3)
+
+stock_data = get_stock()
+print(stock_data)
+
+
+    
