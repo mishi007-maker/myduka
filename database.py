@@ -75,5 +75,34 @@ insert_stock(stock3)
 stock_data = get_stock()
 print(stock_data)
 
+def sales_per_day():
+    cur.execute("""
+    select date(sales.created_at) as date, sum(sales.quantity * products.selling_price)
+     as total_sales from sales join products on products.id = sales.pid group by date;
+    """)
+    daily_sales=cur.fetchall()
+    return daily_sales
 
-    
+def profit_per_day():
+    cur.execute("""
+   select date(sales.created_at) as date, sum(sales.quantity *( products.selling_price - products.buying_price)) 
+    as total_sales from sales join products on products.id = sales.pid group by date;
+    """)
+    daily_profit=cur.fetchall()
+    return daily_profit
+
+def sales_per_product():
+    cur.execute("""
+    select products.name as p_name , sum(sales.quantity * products.selling_price) as total_sales 
+    from products join sales on sales.pid = products.id group by p_name;
+    """)
+    product_sales=cur.fetchall()
+    return product_sales
+
+def  profit_per_product():
+    cur.execute("""
+    select products.name as p_name , sum(sales.quantity *( products.selling_price - products.buying_price)) 
+    as total_sales from products join sales on sales.pid = products.id group by p_name;
+    """)
+    product_profit=cur.fetchall()
+    return product_profit
