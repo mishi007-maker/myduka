@@ -39,19 +39,19 @@ account1.close_account()
 
 # 3.Create two BankAccount objects that can deposit , withdraw , check balance display info and close account..
 
-account1=Bank_account("002","James","04-09-2020",70000)
-account1.display_info()
-account1.deposit(25000)
-account1.withdraw(10000)
-account1.check_balance()
-account1.close_account()
+account2=Bank_account("002","James","04-09-2020",70000)
+account2.display_info()
+account2.deposit(25000)
+account2.withdraw(10000)
+account2.check_balance()
+account2.close_account()
 
-account1=Bank_account("003","Alexia","11-10-2005",150000)
-account1.display_info()
-account1.deposit(46000)
-account1.withdraw(15000)
-account1.check_balance()
-account1.close_account()
+account3=Bank_account("003","Alexia","11-10-2005",150000)
+account3.display_info()
+account3.deposit(46000)
+account3.withdraw(15000)
+account3.check_balance()
+account3.close_account()
        
 
 
