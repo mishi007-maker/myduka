@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+
+
+    <div>
+        <p>This is dashboard</p>
+    </div>
+
+    <div>
+        <canvas id="line-chart" width="800" height="450"></canvas>
+    </div>
+    <div>
+        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+    </div>
+<div>
+    <p>{{ product_names }}</p>
+    <p>{{ prod_profit }}</p>
+    <p>{{ prod_sales }}</p>
+    <p>{{ dates }}</p>
+    <p>{{  day_sales }}</p>
+    <p>{{ day_profit }}</p>
+</div>
+
+<script>
+    // Bar chart
+    new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: {{ product_names | safe }},
+    datasets: [{ 
+        data:{{ prod_sales | safe }},
+        label: "Sales per product ",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data:{{ prod_profit | safe }},
+        label: "Profit per product",
+        borderColor: "#8e5ea2",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'World population per region (in millions)'
+    }
+  }
+});
+
+
+// Bar chart
+new Chart(document.getElementById("bar-chart-grouped"), {
+    type: 'bar',
+    data: {
+      labels: {{ dates | safe }},
+      datasets: [
+        {
+          label: "Sales per day",
+          backgroundColor: "#3e95cd",
+          data: {{ day_sales | safe }}
+        }, {
+          label: "Profit per day",
+          backgroundColor: "#8e5ea2",
+          data: {{ day_profit | safe }}
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Population growth (millions)'
+      }
+    }
+});
+</script>
+{% endblock %}

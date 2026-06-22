@@ -22,3 +22,5 @@ class car:
 Identity : car
 State : brand, color, type, model year, engine
 bahavior : moves, transports, accelerate,reverse 
+
+you only protect routes that return html pages

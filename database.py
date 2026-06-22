@@ -5,10 +5,10 @@ conn=psycopg2.connect(host="localhost",port="5432",user="postgres",password="war
 cur=conn.cursor()
 # cur object
 
-# def get_products():
-#     cur.execute("select * from products")
-#     products_data= cur.fetchall()
-#     return products_data
+def get_products():
+    cur.execute("select * from products")
+    products_data= cur.fetchall()
+    return products_data
 
 def get_sales():
     cur.execute("select * from sales")
@@ -17,12 +17,12 @@ def get_sales():
 
 
 # method 1:
-# def insert_products(values):
-#     cur.execute(f"insert into products(name,buying_price,selling_price)values{values}")
-#     conn.commit()
+def insert_products(values):
+    cur.execute(f"insert into products(name,buying_price,selling_price)values{values}")
+    conn.commit()
 
-# product1=('Lenovo laptop',45000,55000)
-# product2=('Infinix',25000,32000)
+product1=('Lenovo laptop',45000,55000)
+product2=('Infinix',25000,32000)
 
 # insert_products(product1)
 # insert_products(product2)
@@ -51,9 +51,9 @@ sale3=(3,10)
 sale4=(4,26)
 sale5=(5,32)
 
-insert_sales(sale3)
-insert_sales(sale4)
-insert_sales(sale5)
+# insert_sales(sale3)
+# insert_sales(sale4)
+# insert_sales(sale5)
 
 
 sales_data = get_sales()
@@ -68,9 +68,9 @@ stock1=(1,12)
 stock2=(2,17)
 stock3=(3,18)
 
-insert_stock(stock1)
-insert_stock(stock2)
-insert_stock(stock3)
+# insert_stock(stock1)
+# insert_stock(stock2)
+# insert_stock(stock3)
 
 stock_data = get_stock()
 print(stock_data)
@@ -106,3 +106,28 @@ def  profit_per_product():
     """)
     product_profit=cur.fetchall()
     return product_profit
+
+def check_available_stock(pid):
+    cur.execute("select sum(stock.stock_quantity) from stock where pid = %s",(pid,))
+    total_stock=cur.fetchone()[0] or 0
+
+    cur.execute("select sum(sales.quantity) from sales where pid=%s",(pid,))
+    total_sold=cur.fetchone()[0] or 0
+
+    return total_stock - total_sold
+
+def check_user_exists(email):
+    cur.execute("select * from users where email = %s", (email,))
+    user=cur.fetchone()
+    return user
+
+# existing_user=check_user_exists('mitch@gmail.com')
+# print(existing_user)
+
+
+
+
+def create_user(user_details):
+    cur.execute("insert into users(full_name,email,phone_number,password) values (%s,%s,%s,%s)", user_details)
+    conn.commit()
+
